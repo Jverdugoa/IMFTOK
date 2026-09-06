@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ChatMessage, Garment, UserProfile, AIConfig } from "@/types";
 import { StorageService } from "@/lib/storage";
 import { AIStylistService } from "@/lib/ai-stylist";
-import { Send, Sparkles, User, Bot, Trash2, Lightbulb, Shirt, ArrowRight, Loader2 } from "lucide-react";
+import { Send, Sparkles, User, Bot, Trash2, Shirt, Loader2 } from "lucide-react";
 
 interface StylistChatProps {
   profile: UserProfile;
@@ -23,10 +23,10 @@ export const StylistChat: React.FC<StylistChatProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const starterPrompts = [
-    "¿Qué outfit me recomiendas hoy para una reunión de oficina?",
-    "¿Cómo puedo combinar mi blazer beige para un look casual de fin de semana?",
-    "¿Qué 3 prendas básicas me faltan en mi guardarropa actual?",
-    "¿Cuáles son los mejores colores para mi subtono de piel?",
+    "¿Qué look me recomiendas hoy para una reunión de trabajo?",
+    "¿Cómo puedo combinar un blazer estructurado para un look casual?",
+    "¿Qué 3 prendas básicas clave me faltan en mi guardarropa actual?",
+    "¿Cuáles son los mejores colores según mi subtono de piel?",
   ];
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const StylistChat: React.FC<StylistChatProps> = ({
       const welcomeMessage: ChatMessage = {
         id: "msg-welcome",
         role: "assistant",
-        content: `¡Hola ${profile.name || ""}! Soy tu Asesor de Estilismo Personal. He revisado tu guardarropa (${garments.length} prendas registradas) y tu perfil con subtono **${profile.skinUndertone === "warm" ? "cálido" : profile.skinUndertone === "cool" ? "frío" : "neutro"}**.\n\n¿En qué te gustaría que te ayude hoy? Puedes preguntarme cómo combinar una prenda específica, qué ponerte para un evento o qué piezas clave te conviene sumar a tu armario cápsula.`,
+        content: `¡Hola ${profile.name || ""}! Bienvenido a **IMFTOK Chat**. He analizado tu guardarropa (${garments.length} prendas registradas) y tu perfil con subtono **${profile.skinUndertone === "warm" ? "cálido" : profile.skinUndertone === "cool" ? "frío" : "neutro"}**.\n\n¿En qué te gustaría que te asesore hoy? Puedes preguntarme cómo combinar una prenda específica, qué ponerte para un evento o qué piezas clave te conviene sumar a tu armario.`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages([welcomeMessage]);
@@ -99,19 +99,19 @@ export const StylistChat: React.FC<StylistChatProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-4 pb-16">
+    <div className="max-w-4xl mx-auto space-y-4 pb-20 sm:pb-16">
       {/* Top Banner */}
-      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-cream-200 shadow-soft flex items-center justify-between gap-4">
+      <div className="bg-white dark:bg-charcoal-900 p-4 sm:p-6 rounded-3xl border border-cream-200 dark:border-charcoal-800 shadow-soft flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-charcoal-900 text-white flex items-center justify-center">
+          <div className="w-10 h-10 rounded-2xl bg-charcoal-900 dark:bg-white text-white dark:text-charcoal-900 flex items-center justify-center">
             <Bot className="w-5 h-5 text-terracotta-500" />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-serif font-bold text-charcoal-900 leading-tight">
-              Chat con tu Asesor de Estilismo
+            <h1 className="text-base sm:text-xl font-sans font-black text-charcoal-900 dark:text-white leading-tight">
+              Asesor de Estilismo IMFTOK
             </h1>
-            <p className="text-xs text-charcoal-800/60 flex items-center gap-1.5 mt-0.5">
-              <Shirt className="w-3.5 h-3.5 text-sage-700" />
+            <p className="text-[11px] sm:text-xs text-charcoal-800/60 dark:text-zinc-400 flex items-center gap-1.5 mt-0.5">
+              <Shirt className="w-3.5 h-3.5 text-sage-700 dark:text-sage-400" />
               <span>Conectado con tus {garments.length} prendas registradas</span>
             </p>
           </div>
@@ -121,45 +121,45 @@ export const StylistChat: React.FC<StylistChatProps> = ({
           type="button"
           onClick={handleClear}
           title="Borrar chat"
-          className="p-2.5 rounded-full hover:bg-cream-100 text-charcoal-800/60 hover:text-charcoal-900 transition-colors"
+          className="p-2 rounded-full hover:bg-cream-100 dark:hover:bg-charcoal-800 text-charcoal-800/60 dark:text-zinc-400 hover:text-charcoal-900 dark:hover:text-white transition-colors"
         >
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
 
       {/* Chat Messages Box */}
-      <div className="bg-white rounded-3xl border border-cream-200 shadow-card p-4 sm:p-6 flex flex-col h-[520px]">
+      <div className="bg-white dark:bg-charcoal-900 rounded-3xl border border-cream-200 dark:border-charcoal-800 shadow-card p-4 sm:p-6 flex flex-col h-[520px]">
         {/* Messages Scroll Area */}
-        <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+        <div className="flex-1 overflow-y-auto space-y-4 pr-1">
           {messages.map((msg) => {
             const isUser = msg.role === "user";
             return (
               <div
                 key={msg.id}
-                className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"}`}
+                className={`flex gap-2.5 sm:gap-3 ${isUser ? "justify-end" : "justify-start"}`}
               >
                 {!isUser && (
-                  <div className="w-8 h-8 rounded-full bg-charcoal-900 text-white flex items-center justify-center shrink-0 mt-1 shadow-xs">
-                    <Sparkles className="w-4 h-4 text-terracotta-500" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-charcoal-900 dark:bg-zinc-800 text-white flex items-center justify-center shrink-0 mt-1 shadow-xs">
+                    <Sparkles className="w-3.5 h-3.5 text-terracotta-500" />
                   </div>
                 )}
 
-                <div className={`max-w-[85%] sm:max-w-[75%] rounded-3xl p-4 text-xs sm:text-sm leading-relaxed ${
+                <div className={`max-w-[85%] sm:max-w-[75%] rounded-3xl p-3.5 sm:p-4 text-xs sm:text-sm leading-relaxed ${
                   isUser
-                    ? "bg-charcoal-900 text-white rounded-br-none shadow-xs"
-                    : "bg-cream-50 text-charcoal-900 border border-cream-200 rounded-bl-none"
+                    ? "bg-charcoal-900 dark:bg-terracotta-600 text-white rounded-br-none shadow-xs"
+                    : "bg-cream-50 dark:bg-charcoal-950 text-charcoal-900 dark:text-zinc-100 border border-cream-200 dark:border-charcoal-800 rounded-bl-none"
                 }`}>
                   <div className="whitespace-pre-wrap">{msg.content}</div>
-                  <span className={`text-[10px] block mt-1.5 ${
-                    isUser ? "text-cream-300 text-right" : "text-charcoal-800/50 text-left"
+                  <span className={`text-[9px] block mt-1 ${
+                    isUser ? "text-cream-300 dark:text-terracotta-200 text-right" : "text-charcoal-800/50 dark:text-zinc-500 text-left"
                   }`}>
                     {msg.timestamp}
                   </span>
                 </div>
 
                 {isUser && (
-                  <div className="w-8 h-8 rounded-full bg-cream-200 text-charcoal-800 flex items-center justify-center shrink-0 mt-1">
-                    <User className="w-4 h-4" />
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-cream-200 dark:bg-charcoal-800 text-charcoal-800 dark:text-zinc-300 flex items-center justify-center shrink-0 mt-1">
+                    <User className="w-3.5 h-3.5" />
                   </div>
                 )}
               </div>
@@ -167,13 +167,13 @@ export const StylistChat: React.FC<StylistChatProps> = ({
           })}
 
           {isLoading && (
-            <div className="flex gap-3 justify-start items-center animate-pulse">
-              <div className="w-8 h-8 rounded-full bg-charcoal-900 text-white flex items-center justify-center shrink-0">
-                <Sparkles className="w-4 h-4 text-terracotta-500" />
+            <div className="flex gap-2.5 justify-start items-center animate-pulse">
+              <div className="w-7 h-7 rounded-full bg-charcoal-900 dark:bg-zinc-800 text-white flex items-center justify-center shrink-0">
+                <Sparkles className="w-3.5 h-3.5 text-terracotta-500" />
               </div>
-              <div className="bg-cream-50 border border-cream-200 px-4 py-3 rounded-3xl rounded-bl-none text-xs text-charcoal-800 flex items-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin text-terracotta-500" />
-                <span>Tu estilista está formulando la mejor recomendación...</span>
+              <div className="bg-cream-50 dark:bg-charcoal-950 border border-cream-200 dark:border-charcoal-800 px-4 py-2.5 rounded-3xl rounded-bl-none text-xs text-charcoal-800 dark:text-zinc-300 flex items-center gap-2">
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-terracotta-500" />
+                <span>Formulando recomendación personalizada...</span>
               </div>
             </div>
           )}
@@ -183,8 +183,8 @@ export const StylistChat: React.FC<StylistChatProps> = ({
 
         {/* Suggested Quick Starter Prompts */}
         {messages.length <= 3 && (
-          <div className="py-3 border-t border-cream-100">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-800/60 block mb-2">
+          <div className="py-2.5 border-t border-cream-100 dark:border-charcoal-800">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-charcoal-800/60 dark:text-zinc-400 block mb-1.5">
               Sugerencias rápidas:
             </span>
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
@@ -193,7 +193,7 @@ export const StylistChat: React.FC<StylistChatProps> = ({
                   key={idx}
                   type="button"
                   onClick={() => handleSend(p)}
-                  className="px-3 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 text-charcoal-800 text-[11px] whitespace-nowrap transition-all border border-cream-200/80"
+                  className="px-3 py-1.5 rounded-full bg-cream-100 dark:bg-charcoal-800 hover:bg-cream-200 dark:hover:bg-charcoal-700 text-charcoal-800 dark:text-zinc-200 text-[11px] whitespace-nowrap transition-all border border-cream-200/80 dark:border-charcoal-700"
                 >
                   {p}
                 </button>
@@ -203,7 +203,7 @@ export const StylistChat: React.FC<StylistChatProps> = ({
         )}
 
         {/* Input Bar */}
-        <div className="pt-3 border-t border-cream-200">
+        <div className="pt-2.5 border-t border-cream-200 dark:border-charcoal-800">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -215,15 +215,15 @@ export const StylistChat: React.FC<StylistChatProps> = ({
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Pregúntale a tu estilista sobre combinaciones, ocasiones, cortes..."
-              className="flex-1 px-4 py-3 rounded-2xl bg-cream-50 border border-cream-200 text-xs sm:text-sm text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500"
+              placeholder="Pregúntale a tu estilista sobre combinaciones, colores..."
+              className="flex-1 px-4 py-2.5 sm:py-3 rounded-2xl bg-cream-50 dark:bg-charcoal-950 border border-cream-200 dark:border-charcoal-800 text-xs sm:text-sm text-charcoal-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-terracotta-500/20 focus:border-terracotta-500"
             />
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="p-3 bg-charcoal-900 hover:bg-charcoal-800 disabled:opacity-40 text-white rounded-2xl transition-all active:scale-95 shadow-sm"
+              className="p-3 bg-charcoal-900 dark:bg-white hover:bg-charcoal-800 text-white dark:text-charcoal-950 disabled:opacity-40 rounded-2xl transition-all active:scale-95 shadow-sm"
             >
-              <Send className="w-4 h-4 text-terracotta-500" />
+              <Send className="w-4 h-4 text-terracotta-500 dark:text-terracotta-600" />
             </button>
           </form>
         </div>

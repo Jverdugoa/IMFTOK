@@ -4,6 +4,8 @@ export type SkinUndertone = "warm" | "cool" | "neutral";
 
 export type Season = "primavera" | "verano" | "otono" | "invierno" | "todas";
 
+export type ThemeMode = "light" | "dark" | "system";
+
 export interface UserProfile {
   name: string;
   genderIdentity: string;
@@ -16,6 +18,7 @@ export interface UserProfile {
   avoidedColors: string[];
   openToBuying: boolean;
   completedOnboarding: boolean;
+  vaultId?: string;
 }
 
 export interface Garment {
@@ -77,4 +80,8 @@ export interface AIConfig {
   geminiKey?: string;
   openaiKey?: string;
   groqKey?: string;
+  vaultId?: string;
+  supabaseUrl?: string;
+  supabaseKey?: string;
+  autoSync?: boolean;
 }
