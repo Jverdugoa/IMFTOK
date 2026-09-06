@@ -12,7 +12,7 @@ import { StylistChat } from "@/components/chat/StylistChat";
 import { LookbookView } from "@/components/lookbook/LookbookView";
 import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 import { SettingsModal } from "@/components/settings/SettingsModal";
-import { Sparkles, Check, Cloud } from "lucide-react";
+import { Sparkles, Check } from "lucide-react";
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
@@ -145,7 +145,7 @@ export default function Home() {
     <div className="min-h-screen bg-cream-50 dark:bg-charcoal-950 text-charcoal-900 dark:text-zinc-100 flex flex-col font-sans transition-colors">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-20 right-4 sm:right-8 z-50 bg-charcoal-900 dark:bg-white text-white dark:text-charcoal-950 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 text-xs font-bold animate-fadeIn border border-white/10 dark:border-black/10">
+        <div className="fixed top-16 sm:top-20 right-3 sm:right-8 z-50 bg-charcoal-900 dark:bg-white text-white dark:text-charcoal-950 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 text-xs font-bold animate-fadeIn border border-white/10 dark:border-black/10">
           <Check className="w-4 h-4 text-emerald-400 dark:text-emerald-600 shrink-0" />
           <span>{toastMessage}</span>
         </div>
@@ -161,10 +161,11 @@ export default function Home() {
         garmentCount={garments.length}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        vaultId={vaultId}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-6">
         {activeTab === "closet" && (
           <ClosetView
             garments={garments}
